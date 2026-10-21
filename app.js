@@ -3,9 +3,14 @@ const filterEl = document.querySelector(".filter");
 const countryCards = document.querySelectorAll(".flag-1");
 const bodyEl = document.body;
 const darkBtnEl = document.querySelector(".navbar-oyi");
-
+const siteMode = localStorage.getItem("mode"); // || "light"
+if (siteMode === "dark") {
+  bodyEl.classList.add("dark-mode");
+}
 darkBtnEl.addEventListener("click", () => {
   bodyEl.classList.toggle("dark-mode");
+  const currentMode = bodyEl.classList.contains("dark-mode") ? "dark" : "light";
+  localStorage.setItem("mode", currentMode);
 });
 
 function filterCountries() {

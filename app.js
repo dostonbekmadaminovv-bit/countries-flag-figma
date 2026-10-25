@@ -14,22 +14,19 @@ darkBtnEl.addEventListener("click", () => {
 });
 
 function filterCountries() {
-  const searchText = searchEl.value.trim().toLowerCase();
-  const selectedRegion = filterEl.value;
+  const searchText = searchEl.value.trim().toLocaleLowerCase();
+  const selectedRegion = filterEl.value.trim().toLocaleLowerCase();
 
   countryCards.forEach((card) => {
     const countryName = card
       .querySelector("h3")
       .textContent.trim()
-      .toLowerCase();
+      .toLocaleLowerCase();
 
-    const details = card.querySelector("p").innerText;
+    const details = card.querySelector("p").textContent;
 
-    const regionLine = details
-      .split("\n")
-      .find((line) => line.trim().startsWith("Region:"));
-
-    const region = regionLine ? regionLine.replace("Region:", "").trim() : "";
+    const regionMatch = details.match(/Region:\s*([a-z]+)/i);
+    const region = regionMatch ? regionMatch[1].trim().toLocaleLowerCase() : "";
 
     const nameMatches = countryName.includes(searchText);
     const regionMatches = selectedRegion === "" || region === selectedRegion;
@@ -40,6 +37,8 @@ function filterCountries() {
 
 searchEl.addEventListener("input", filterCountries);
 filterEl.addEventListener("change", filterCountries);
+
+filterCountries();
 
 // searchEl.addEventListener("input", (e) => {
 //   e.preventDefault();
